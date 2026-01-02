@@ -28,4 +28,21 @@ def process_record(record: Dict[str, Any]) -> Dict[str, Any]:
         - 不要修改传入的 record
         - 返回值结构必须严格一致
     """
+    user_id = record["user_id"]
+    score = record["score"]
+    enable = record["enable"]
+    new_score = []
+    for item in score:
+        if item > 0 and type(item) == int:
+            new_score.append(item)
+    if new_score:
+        average_score = round(sum(new_score) / len(new_score), 2)
+    else:
+        average_score = 0
+    if enable and average_score > 60:
+        status = "PASS"
+    else:
+        status = "FAIL"
+    result_dict = {"user_id": user_id, "average_score": average_score, "status": status}
+    return result_dict
     raise NotImplementedError
